@@ -1,0 +1,22 @@
+
+  <view class="container">
+    <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="st" wx:key="index">
+      
+  <view class="statement" bindtap="$statement$statement" data-com-index="{{index}}" data-wpystatement-a="{{ st.id }}" data-wpystatement-b="{{ st}}">
+    <view class="information">
+      <view class="icon">
+        <image src="../../public/images/icon/{{ st.imageIcon }}"/>
+      </view>
+      <view class="st-title">
+        <view class="title">{{ st.typeName }}</view>
+        <view class="description"  wx:if="{{st.remark}}">{{ st.remark }}</view>
+        <view class="time">{{ st.accountTime }}</view>
+      </view>
+    </view>
+    <view class="amount {{ st.incomeType }}">
+      ￥{{ st.money }}
+    </view>
+  </view>
+
+    </block>
+  </view>

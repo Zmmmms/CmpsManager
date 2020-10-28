@@ -1,0 +1,54 @@
+
+  <view class="container">
+    <view class="header">
+      <image class="bg" src="../public/images/image.png"/>
+      <view class="level-2">
+        <view class="fs14">
+          <text>今日支出</text>
+        </view>
+        <view class="fs21 today-expend">{{header.todayExpend}}</view>
+        <view class="overflow-hide">
+          <view class="pull-left fs14">本月支出 {{header.curMonthExpend}}</view>
+          <view class="pull-right fs14">净剩余 {{header.netWorth}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="zan-btns new-record">
+      <navigator url="/pages/statements/create">
+        <button class="zan-btn jz-btn btn-shadow">记一笔</button>
+      </navigator>
+    </view>
+
+    <view class="statement-list" wx-if="{{ list.length > 0 }}">
+      <block wx:for="{{ list }}" wx:for-index="index" wx:for-item="item" wx:key="index">
+        
+  <view class="statement" bindtap="$StatementItem$statement" data-com-index="{{index}}" data-wpystatement-a="{{ item.id }}" data-wpystatement-b="{{ item}}">
+    <view class="information">
+      <view class="icon">
+        <image src="../public/images/icon/{{ item.imageIcon }}"/>
+      </view>
+      <view class="st-title">
+        <view class="title">{{ item.typeName }}</view>
+        <view class="description"  wx:if="{{item.remark}}">{{ item.remark }}</view>
+        <view class="time">{{ item.accountTime }}</view>
+      </view>
+    </view>
+    <view class="amount {{ item.incomeType }}">
+      ￥{{ item.money }}
+    </view>
+  </view>
+
+      </block>
+    </view>
+
+    <view  wx:if="{{ list.length == 0 }}">
+      
+  <view class="empty">
+    <view class="iconfont jz-icon-nomoredata empty-no-more"/>
+    <view class="title fs14">{{ $empty$title }}</view>
+  </view>
+
+    </view>
+
+  </view>

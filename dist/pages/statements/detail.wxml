@@ -1,0 +1,52 @@
+
+  <view>
+    <view class="container">
+      <view class="title">
+        <view>
+          <image class="icon" src="../../public/images/icon/{{ statement.imageIcon }}"/>
+          <text>{{ statement.typeName }}</text>
+        </view>
+        <text class="{{statement.incomeType}}">{{ statement.incomeType == 'expend' ? '-' : '+' }} {{ statement.money }}</text>
+      </view>
+
+      <view class="column">
+        <view>
+          <view class="iconfont jz-icon-fenlei"/>
+          <text>分类</text>
+        </view>
+        <text>消费类型 / {{ statement.typeName }}</text>
+      </view>
+      <view class="column">
+        <view>
+          <view class="iconfont jz-icon-shijian"/>
+          <text>消费时间</text>
+        </view>
+        <text>{{ statement.accountTime }}</text>
+      </view>
+      <view class="column">
+        <view>
+          <view class="iconfont jz-icon-shijian"/>
+          <text>操作时间</text>
+        </view>
+        <text>{{ statement.operaTime }}</text>
+      </view>
+      <view class="column">
+        <view>
+          <view class="iconfont jz-icon-remark"/>
+          <text>备注</text>
+        </view>
+        <text>{{ statement.remark }}</text>
+      </view>
+    </view>
+
+    <view class="button-groups">
+      <view class="delete-button" bindtap="del">
+        <view class="iconfont jz-icon-delete"/>
+        <text>删除</text>
+      </view>
+      <view class="edit-button" bindtap="edit">
+        <view class="iconfont jz-icon-edit"/>
+        <text>编辑</text>
+      </view>
+    </view>
+  </view>

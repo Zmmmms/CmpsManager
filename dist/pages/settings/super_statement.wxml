@@ -1,0 +1,102 @@
+
+  <view class="container">
+    <view class="header">
+      <view class="amount">{{ header.left }}</view>
+      <view class="subtitle">结余</view>
+    </view>
+    <view class="surplus">
+      <view class="all-income income">总收入： {{ header.income }}</view>
+      <view class="all-expend expend">总支出： {{ header.expend }}</view>
+    </view>
+
+    
+  <view class="filter-container">
+    <view class="filter">
+      <view bindtap="$filter$showContent" data-wpyshowcontent-a="time">
+        <text>{{ $filter$yearTimeName }} {{ $filter$monthTimeName }}</text>
+        <view class="down-icon"><image src="../../public/images/real-down.png"/></view>
+      </view>
+      <view bindtap="$filter$showContent" data-wpyshowcontent-a="consumeType">
+        <text>{{ $filter$categoryName }}</text>
+        <view class="down-icon"><image src="../../public/images/real-down.png"/></view>
+      </view>
+    </view>
+
+    <view class="content">
+      <view class="time-filter"  wx:if="{{ $filter$filterType == 'time' }}">
+        <text>年份</text>
+        <view class="label-list">
+          <view wx:for="{{ $filter$filter.time.years }}" class="item {{ $filter$params.year === item ? 'active' : '' }}" bindtap="$filter$paramsConcat" wx:key="{{ index }}" data-wpyparamsconcat-a="year" data-wpyparamsconcat-b="{{ item }}">
+            {{ item }}年
+          </view>
+        </view>
+
+        <text>月份</text>
+        <view class="label-list">
+          <view wx:for="{{ $filter$filter.time.months }}" class="item {{ $filter$params.month === item ? 'active' : '' }}" bindtap="$filter$paramsConcat" wx:key="{{ index }}" data-wpyparamsconcat-a="month" data-wpyparamsconcat-b="{{ item }}">
+            {{ item }}月
+          </view>
+        </view>
+      </view>
+
+      <view class="time-filter"  wx:if="{{ $filter$filterType == 'consumeType' }}">
+        <view class="label-list">
+          <view class="item {{ $filter$params.consumeType === '' ? 'active' : '' }}" bindtap="$filter$paramsConcat" data-wpyparamsconcat-a="consumeType" data-wpyparamsconcat-b="{{ $filter$allCategory }}">
+            所有分类
+          </view>
+
+          <view wx:for="{{ $filter$filter.categories }}" class="item {{ $filter$params.consumeType === item.id ? 'active' : '' }}" bindtap="$filter$paramsConcat" wx:key="{{ index }}" data-wpyparamsconcat-a="consumeType" data-wpyparamsconcat-b="{{ item }}">
+            {{ item.typeName }}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+
+    <view class="content">
+      <view  wx:for="{{ list }}" wx:key="{{ index }}">
+        <!-- header -->
+        <view class="column" bindtap="getList" data-wpygetlist-a="{{ item.year }}" data-wpygetlist-b="{{ item.month }}" data-wpygetlist-c="{{ index }}">
+          <view class="two-column">
+            <view class="time align-right">
+              <text>{{ item.month }}月</text>
+              <text>{{ item.year }}年</text>
+            </view>
+            <view class="amount">
+              <text class="income">收入： {{ item.incomeAmount }}</text>
+              <text class="expend">支出： {{ item.expendAmount }}</text>
+            </view>
+          </view>
+          <view class="left-amount align-right">
+            <view>
+              <view class="repayment">{{ item.surplus }}</view>
+              <view>结余</view>
+            </view>
+            <text class="iconfont jz-icon-arrow-down-copy" wx:if="{{ item.hidden }}"/>
+            <text class="iconfont jz-icon-arrow-up" wx:else/>
+          </view>
+        </view>
+        <!-- list -->
+        <block wx:if="{{ !item.hidden }}" wx:for="{{ item.children }}" wx:for-index="index" wx:for-item="st" wx:key="index">
+          
+  <view class="statement" bindtap="$statement$statement" data-com-index="{{index}}" data-wpystatement-a="{{ st.id }}" data-wpystatement-b="{{ st}}">
+    <view class="information">
+      <view class="icon">
+        <image src="../../public/images/icon/{{ st.imageIcon }}"/>
+      </view>
+      <view class="st-title">
+        <view class="title">{{ st.typeName }}</view>
+        <view class="description"  wx:if="{{st.remark}}">{{ st.remark }}</view>
+        <view class="time">{{ st.accountTime }}</view>
+      </view>
+    </view>
+    <view class="amount {{ st.incomeType }}">
+      ￥{{ st.money }}
+    </view>
+  </view>
+
+        </block>
+      </view>
+    </view>
+  </view>

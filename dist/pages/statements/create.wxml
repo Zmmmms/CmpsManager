@@ -1,0 +1,149 @@
+
+  <view class="container">
+    <i-tabs current="{{ current }}" bindchange="handleChange">
+      <i-tab key="expend" title="支出"/>
+      <i-tab key="income" title="收入"/>
+      <i-tab key="transfer" title="借出"/>
+      <i-tab key="repayment" title="借入"/>
+    </i-tabs>
+    
+    <view class="comonent-list">
+      
+  <form bindsubmit="$Expend$formSubmit" report-submit="true" wx:if="{{ current == 'expend' }}">
+    <view class="container">
+      <view class="column money">
+        <text>金额</text>
+        <input class="money-input {{ $Expend$statement.incomeType }}" placeholder="0.00" placeholder-class="{{ $Expend$statement.incomeType }}" bindinput="$Expend$handleAmountInput" name="money" type="digit" value="{{ $Expend$statement.money }}"/>
+      </view>
+
+      <view class="column" bindtap="$Expend$redirectChoseCategory">
+        <text>分类</text>
+        <text type="digit" class="align-right">{{ $Expend$statement.category_name }}</text>
+        <input hidden name="consumeType" value="{{ $Expend$statement.consumeType }}"/>
+      </view>
+      <view class="column">
+        <text>日期</text>
+        <picker mode="date" start="2017-01-01" bindchange="$Expend$dateChange">
+          <text>{{ $Expend$statement.accountTime }}</text>
+        </picker>
+        <input hidden name="accountTime" value="{{ $Expend$statement.accountTime }}"/>
+      </view>
+      <view class="frequent-use">
+        <text>快速选择：</text>
+        <text class="label" bindtap="$Expend$quickSetDate" data-wpyquicksetdate-a="-2">前天</text>
+        <text class="label" bindtap="$Expend$quickSetDate" data-wpyquicksetdate-a="-1">昨天</text>
+        <text class="label" bindtap="$Expend$quickSetDate" data-wpyquicksetdate-a="0">今天</text>
+      </view>
+      <view class="column">
+        <text>备注</text>
+        <input class="remark" type="text" name="remark" bindinput="$Expend$handleDescInput" value="{{ $Expend$statement.remark }}" placeholder="本笔账单的简单说明"/>
+      </view>
+      <view class="btn-save">
+        <button  wx:if="{{ !$Expend$submiting }}" formType="submit">保存</button>
+        <button  wx:else>保存中...</button>
+        <input hidden name="incomeType" value="{{ $Expend$statement.incomeType }}"/>
+      </view>
+    </view>
+  </form>
+
+
+      
+  <form bindsubmit="$Income$formSubmit" report-submit="true" wx:if="{{ current == 'income' }}">
+    <view class="container">
+      <view class="column money">
+        <text>金额</text>
+        <input class="money-input {{ $Income$statement.incomeType }}" placeholder="0.00" placeholder-class="{{ $Income$statement.incomeType }}" bindinput="$Income$handleAmountInput" name="money" type="digit" value="{{ $Income$statement.money }}"/>
+      </view>
+
+      <view class="column" bindtap="$Income$redirectChoseCategory">
+        <text>分类</text>
+        <text type="digit" class="align-right">{{ $Income$statement.category_name }}</text>
+        <input hidden name="consumeType" value="{{ $Income$statement.consumeType }}"/>
+      </view>
+      <view class="column">
+        <text>日期</text>
+        <picker mode="date" start="2017-01-01" bindchange="$Income$dateChange">
+          <text>{{ $Income$statement.accountTime }}</text>
+        </picker>
+        <input hidden name="accountTime" value="{{ $Income$statement.accountTime }}"/>
+      </view>
+      <view class="frequent-use">
+        <text>快速选择：</text>
+        <text class="label" bindtap="$Income$quickSetDate" data-wpyquicksetdate-a="-2">前天</text>
+        <text class="label" bindtap="$Income$quickSetDate" data-wpyquicksetdate-a="-1">昨天</text>
+        <text class="label" bindtap="$Income$quickSetDate" data-wpyquicksetdate-a="0">今天</text>
+      </view>
+      <view class="column">
+        <text>备注</text>
+        <input class="remark" type="text" name="remark" bindinput="$Income$handleDescInput" value="{{ $Income$statement.remark }}" placeholder="本笔账单的简单说明"/>
+      </view>
+      <view class="btn-save">
+        <button  wx:if="{{ !$Income$submiting }}" formType="submit">保存</button>
+        <button  wx:else>保存中...</button>
+        <input hidden name="incomeType" value="{{ $Income$statement.incomeType }}"/>
+      </view>
+    </view>
+  </form>
+
+
+      
+  <form bindsubmit="$Transfer$formSubmit" report-submit="true" wx:if="{{ current == 'transfer' }}">
+    <view class="container">
+      <view class="column money">
+        <text>金额</text>
+        <input class="money-input transfer" placeholder="0.00" placeholder-class="transfer" bindinput="$Transfer$handleAmountInput" name="money" type="digit" value="{{ $Transfer$statement.money }}"/>
+      </view>
+      <view class="column">
+        <text>日期</text>
+        <picker mode="date" start="2017-01-01" bindchange="$Transfer$dateChange">
+          <text>{{ $Transfer$statement.accountTime }}</text>
+        </picker>
+        <input hidden name="accountTime" value="{{ $Transfer$statement.accountTime }}"/>
+      </view>
+
+      <view class="column">
+        <text>备注</text>
+        <input class="pull-right remark" type="text" name="remark" bindinput="$Transfer$handleDescInput" value="{{ $Transfer$statement.remark }}" placeholder="本笔账单的简单说明"/>
+      </view>
+
+      <view class="btn-save">
+         <button  wx:if="{{ !$Transfer$submiting }}" formType="submit">保存</button>
+        <button  wx:else>保存中...</button>
+        <input hidden name="consumeType" value="99"/>
+        <input hidden name="incomeType" value="transfer"/>
+      </view>
+    </view>
+  </form>
+
+
+      
+  <form bindsubmit="$Repayment$formSubmit" report-submit="true" wx:if="{{ current == 'repayment' }}">
+    <view class="container">
+      <view class="column money">
+        <text>金额</text>
+        <input class="money-input repayment" placeholder="0.00" placeholder-class="repayment" bindinput="$Repayment$handleAmountInput" name="money" type="digit" value="{{ $Repayment$statement.money }}"/>
+      </view>
+      <view class="column">
+        <text>日期</text>
+        <picker mode="date" start="2017-01-01" bindchange="$Repayment$dateChange">
+          <text>{{ $Repayment$statement.accountTime }}</text>
+        </picker>
+        <input hidden name="accountTime" value="{{ $Repayment$statement.accountTime }}"/>
+      </view>
+
+      <view class="column">
+        <text>备注</text>
+        <input class="pull-right remark" type="text" name="remark" bindinput="$Repayment$handleDescInput" value="{{ $Repayment$statement.remark }}" placeholder="本笔账单的简单说明"/>
+      </view>
+      <view class="btn-save">
+         <button  wx:if="{{ !$Repayment$submiting }}" formType="submit">保存</button>
+        <button  wx:else>保存中...</button>
+        <input hidden name="consumeType" value="100"/>
+        <input hidden name="incomeType" value="repayment"/>
+      </view>
+    </view>
+  </form>
+
+    </view>
+
+  </view>

@@ -1,0 +1,1 @@
+"use strict";var env=0,host="http://172.23.203.28:8080";module.exports={host:host,url:host+"/accountingentry",env:env,mapKey:"",appid:""};
